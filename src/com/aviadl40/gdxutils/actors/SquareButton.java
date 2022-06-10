@@ -1,4 +1,4 @@
-package com.aviadl40.gdxutils;
+package com.aviadl40.gdxutils.actors;
 
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;

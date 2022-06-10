@@ -1,4 +1,4 @@
-package com.aviadl40.gdxutils;
+package com.aviadl40.gdxutils.actors;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;

@@ -1,4 +1,4 @@
-package com.aviadl40.gdxutils;
+package com.aviadl40.gdxutils.actors;
 
 import android.support.annotation.NonNull;
 

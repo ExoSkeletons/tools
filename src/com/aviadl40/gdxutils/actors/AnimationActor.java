@@ -1,5 +1,6 @@
-package com.aviadl40.gdxutils;
+package com.aviadl40.gdxutils.actors;
 
+import com.aviadl40.gdxutils.GdxUtils;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;

@@ -3,6 +3,7 @@ package com.aviadl40.gdxutils;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
+import com.aviadl40.gdxutils.listeners.AssetLoadListener;
 import com.aviadl40.utils.Extension;
 import com.aviadl40.utils.Utils;
 import com.badlogic.gdx.Gdx;
