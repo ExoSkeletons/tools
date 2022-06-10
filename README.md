@@ -1,1 +1,1 @@
-## A Collection of helpeful Classes and functions
+## A Collection of helpeful Classes and functions.
