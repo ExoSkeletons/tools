@@ -1,0 +1,17 @@
+apply plugin: "java"
+
+sourceCompatibility = 1.7
+
+ext {
+    gdxVersion = '1.9.10'
+}
+
+dependencies {
+    implementation 'com.android.support:support-annotations:28.0.0'
+    api "com.badlogicgames.gdx:gdx:$gdxVersion"
+    api "com.badlogicgames.gdx:gdx-freetype:$gdxVersion"
+    implementation "com.kotcrab.vis:vis-ui:1.4.4"
+}
+[compileJava, compileTestJava]*.options*.encoding = 'UTF-8'
+
+sourceSets.main.java.srcDirs = [ "src/" ]
