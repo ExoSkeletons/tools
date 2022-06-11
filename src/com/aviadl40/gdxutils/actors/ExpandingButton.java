@@ -4,9 +4,9 @@ import android.support.annotation.NonNull;
 
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.math.Interpolation;
+import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
-import com.badlogic.gdx.scenes.scene2d.actions.DelayAction;
 import com.badlogic.gdx.scenes.scene2d.actions.SequenceAction;
 import com.badlogic.gdx.scenes.scene2d.actions.TemporalAction;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
@@ -33,7 +33,6 @@ public class ExpandingButton extends WidgetGroup {
 			progress = percent;
 		}
 	};
-	private DelayAction delayAction = new DelayAction();
 	private SequenceAction sequence = new SequenceAction();
 
 	public ExpandingButton(@NonNull Button root) {
@@ -41,29 +40,23 @@ public class ExpandingButton extends WidgetGroup {
 		root.addListener(new ChangeListener() {
 			@Override
 			public void changed(ChangeEvent event, Actor actor) {
-				Actor listenerActor = event.getListenerActor();
-				if (!(listenerActor instanceof Button)) return;
-				Button root = (Button) listenerActor;
-
 				// Listener fires after button is checked
-				boolean expand = root.isChecked();
+				final boolean expand = ExpandingButton.this.root.isChecked();
 
-				root.removeAction(sequence);
 				sequence.reset();
 
-				progressAction.restart();
-				progressAction.setDuration(animDuration);
-				progressAction.setReverse(!expand);
-				sequence.addAction(progressAction);
+				sequence.addAction(restartProgressAction(expand));
 
 				if (expand && collapseAfter >= 0) {
-					delayAction.setDuration(collapseAfter);
-					delayAction.restart();
-					sequence.addAction(delayAction);
+					sequence.addAction(Actions.delay(collapseAfter));
 					sequence.addAction(Actions.run(new Runnable() {
 						@Override
 						public void run() {
-							if (delayAction.getDuration() >= 0) collapse();
+							Button root = ExpandingButton.this.root;
+							root.setProgrammaticChangeEvents(false);
+							root.setChecked(false);
+							root.setProgrammaticChangeEvents(true);
+							sequence.addAction(restartProgressAction(false));
 						}
 					}));
 				}
@@ -72,6 +65,13 @@ public class ExpandingButton extends WidgetGroup {
 				addAction(sequence);
 			}
 		});
+	}
+
+	private TemporalAction restartProgressAction(boolean expand) {
+		progressAction.restart();
+		progressAction.setDuration(animDuration);
+		progressAction.setReverse(!expand);
+		return progressAction;
 	}
 
 	public boolean hidesRootOnExpand() {
