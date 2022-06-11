@@ -20,7 +20,7 @@ public class ExpandingButton extends WidgetGroup {
 
 	private boolean hideRootOnExpand = false;
 	private boolean horizontal = true, positive = true; // +/-
-	private float sparsity = 0, calcSparsity = 0;
+	private float spacing = 0, calcSpacing = 0;
 
 	private float progress = 0;
 	private float animDuration = 0, collapseAfter = -1;
@@ -35,6 +35,9 @@ public class ExpandingButton extends WidgetGroup {
 	};
 	private SequenceAction sequence = new SequenceAction();
 
+	/**
+	 * @param root Root Button to be used for expanding and collapsing the widget.
+	 */
 	public ExpandingButton(@NonNull Button root) {
 		this.root = root;
 		root.addListener(new ChangeListener() {
@@ -78,6 +81,9 @@ public class ExpandingButton extends WidgetGroup {
 		return hideRootOnExpand;
 	}
 
+	/**
+	 * Sets whether or not to hide the root Button when the children are shown.
+	 */
 	public void setHideRootOnExpand(boolean hideRoot) {
 		this.hideRootOnExpand = hideRoot;
 	}
@@ -86,7 +92,12 @@ public class ExpandingButton extends WidgetGroup {
 		return horizontal;
 	}
 
-	public void setHorizontal(boolean horizontal) {
+	/**
+	 * Sets the axis to expand in.
+	 *
+	 * @param horizontal expands horizontally if true, vertically if false
+	 */
+	public void setAxis(boolean horizontal) {
 		this.horizontal = horizontal;
 	}
 
@@ -94,17 +105,23 @@ public class ExpandingButton extends WidgetGroup {
 		return positive;
 	}
 
+	/**
+	 * Sets whether to expand in the positive direction or the negative.
+	 */
 	public void setPositive(boolean positive) {
 		this.positive = positive;
 		invalidate();
 	}
 
-	public float getSparsity() {
-		return sparsity;
+	public float getSpacing() {
+		return spacing;
 	}
 
-	public void setSparsity(float sparsity) {
-		this.sparsity = sparsity;
+	/**
+	 * Sets the spacing between children
+	 */
+	public void setSpacing(float spacing) {
+		this.spacing = spacing;
 		invalidate();
 	}
 
@@ -112,16 +129,11 @@ public class ExpandingButton extends WidgetGroup {
 		return animDuration;
 	}
 
+	/**
+	 * Sets the expand/collapse animation duration.
+	 */
 	public void setDuration(float duration) {
 		this.animDuration = duration;
-	}
-
-	public float getCollapseAfter() {
-		return collapseAfter;
-	}
-
-	public void setCollapseAfter(float collapseAfter) {
-		this.collapseAfter = collapseAfter;
 	}
 
 	@NonNull
@@ -129,16 +141,38 @@ public class ExpandingButton extends WidgetGroup {
 		return interpolation;
 	}
 
+	/**
+	 * Sets the interpolation to use when animating.
+	 *
+	 * @see Interpolation
+	 */
 	public void setInterpolation(@NonNull Interpolation interpolation) {
 		this.interpolation = interpolation;
 	}
 
+	/**
+	 * @return State of the Widget between 0-1.
+	 * 0 = Fully collapsed
+	 * 1 = Fully expanded
+	 */
 	public float getProgress() {
 		return progress;
 	}
 
 	public void setProgress(float progress) {
-		this.progress = progress;
+		this.progress = MathUtils.clamp(progress, 0f, 1f);
+	}
+
+	public float getCollapseAfter() {
+		return collapseAfter;
+	}
+
+	/**
+	 * Sets how long after expanding should the widget automatically collapse back.
+	 * Set to -1 to remain expanded (Default).
+	 */
+	public void setCollapseAfter(float collapseAfter) {
+		this.collapseAfter = collapseAfter;
 	}
 
 	public void expand() {
@@ -187,7 +221,7 @@ public class ExpandingButton extends WidgetGroup {
 											? prev.getWidth() * prev.getScaleX()
 											: -c.getWidth() * c.getScaleX()
 							) + (
-									i > 0 ? calcSparsity : 0
+									i > 0 ? calcSpacing : 0
 							),
 							progress
 					);
@@ -201,7 +235,7 @@ public class ExpandingButton extends WidgetGroup {
 											? prev.getHeight() * prev.getScaleY()
 											: -c.getHeight() * c.getScaleY()
 							) + (
-									i > 0 ? calcSparsity : 0
+									i > 0 ? calcSpacing : 0
 							),
 							progress
 					);
@@ -232,7 +266,7 @@ public class ExpandingButton extends WidgetGroup {
 
 	@Override
 	public void layout() {
-		calcSparsity = sparsity * (positive ? 1 : -1);
+		calcSpacing = spacing * (positive ? 1 : -1);
 		super.layout();
 	}
 
