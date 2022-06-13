@@ -103,6 +103,12 @@ public final class Utils {
 		return ((b >> index) & 1) == 1;
 	}
 
+	public static float round(float f, int decimals) {
+		if (decimals <= 0) return (int) f;
+		float s = (float) Math.pow(10, decimals);
+		return ((int) (f * s)) / s;
+	}
+
 	private Utils() {
 	}
 }

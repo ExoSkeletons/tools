@@ -123,12 +123,6 @@ public final class GdxUtils {
 			}
 	}
 
-	public static float round(float f, int decimals) {
-		if (decimals <= 0) return (int) f;
-		float s = (float) Math.pow(10, decimals);
-		return ((int) (f * s)) / s;
-	}
-
 	public static void centerX(Actor actor, float XMin, float XMax) {
 		actor.setX(XMin + ((XMax - XMin) - actor.getWidth() * actor.getScaleX()) / 2);
 	}
