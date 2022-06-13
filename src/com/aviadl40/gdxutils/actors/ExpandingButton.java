@@ -23,9 +23,11 @@ public class ExpandingButton extends WidgetGroup {
 	private float spacing = 0, calcSpacing = 0;
 
 	private float progress = 0;
-	private float animDuration = 0, collapseAfter = -1;
+	private float animDuration = 0;
 	@NonNull
 	private Interpolation interpolation = Interpolation.smoother;
+
+	private float collapseAfter = -1;
 
 	private TemporalAction progressAction = new TemporalAction() {
 		@Override
