@@ -93,11 +93,13 @@ public class AnimationActor extends Image {
 	@Override
 	public void act(float delta) {
 		super.act(delta);
-		float temp = time;
+		float pastTime = this.time;
 		if (!paused)
-			setAnimationTime(time + delta);
-		if (GdxUtils.hasFrame(animation, time) && animation.getKeyFrameIndex(temp) != animation.getKeyFrameIndex(time))
+			setAnimationTime(pastTime + delta);
+		float nowTime = this.time;
+		if (GdxUtils.hasFrame(animation, nowTime) && animation.getKeyFrameIndex(pastTime) != animation.getKeyFrameIndex(nowTime)) {
 			frameChanged();
-		updateDrawable();
+			updateDrawable();
+		}
 	}
 }
