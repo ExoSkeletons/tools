@@ -38,7 +38,7 @@ public class ExpandingButton extends WidgetGroup {
 	private SequenceAction sequence = new SequenceAction();
 
 	/**
-	 * @param root Root Button to be used for expanding and collapsing the widget.
+	 * @param root Root {@link Button} to be used for expanding and collapsing the widget.
 	 */
 	public ExpandingButton(@NonNull Button root) {
 		this.root = root;
