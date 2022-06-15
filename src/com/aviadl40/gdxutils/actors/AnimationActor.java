@@ -23,11 +23,11 @@ public class AnimationActor extends Image {
 		return animation;
 	}
 
-	public void setAnimation(final Animation<TextureRegionDrawable> a) {
+	public void setAnimation(Animation<TextureRegionDrawable> a) {
 		setAnimation(a, true);
 	}
 
-	public void setAnimation(final Animation<TextureRegionDrawable> a, final boolean restart) {
+	public void setAnimation(Animation<TextureRegionDrawable> a, boolean restart) {
 		Animation old = animation;
 		animation = a;
 		if (restart) restartAnimation();
@@ -43,7 +43,7 @@ public class AnimationActor extends Image {
 		return animation == null ? 0 : animation.getKeyFrameIndex(getTime());
 	}
 
-	public void setAnimationFrameIndex(final int frame) {
+	public void setAnimationFrameIndex(int frame) {
 		setAnimationTime(animation == null ? 0 : frame * animation.getFrameDuration());
 	}
 
@@ -52,7 +52,7 @@ public class AnimationActor extends Image {
 		return animation.getAnimationDuration();
 	}
 
-	public void setAnimationTime(final float time) {
+	public void setAnimationTime(float time) {
 		this.time = time;
 	}
 
