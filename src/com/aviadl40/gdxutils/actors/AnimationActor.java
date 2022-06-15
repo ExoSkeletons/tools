@@ -8,7 +8,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 public class AnimationActor extends Image {
 	private Animation<TextureRegionDrawable> animation = null;
 
-	private float time = 0;
+	private float time = 0, prevTime = 0;
 	private boolean paused = false;
 
 	public AnimationActor(Animation<TextureRegionDrawable> animation) {
@@ -93,13 +93,12 @@ public class AnimationActor extends Image {
 	@Override
 	public void act(float delta) {
 		super.act(delta);
-		float pastTime = this.time;
 		if (!paused)
-			setAnimationTime(pastTime + delta);
-		float nowTime = this.time;
-		if (GdxUtils.hasFrame(animation, nowTime) && animation.getKeyFrameIndex(pastTime) != animation.getKeyFrameIndex(nowTime)) {
+			setAnimationTime(time + delta);
+		if (GdxUtils.hasFrame(animation, time) && animation.getKeyFrameIndex(prevTime) != animation.getKeyFrameIndex(time)) {
 			frameChanged();
 			updateDrawable();
 		}
+		prevTime = time;
 	}
 }
