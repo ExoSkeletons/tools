@@ -160,10 +160,16 @@ public final class GdxUtils {
 
             */
 
-		return a.getX() + a.getWidth() * a.getScaleX() >= 0 &&
-				a.getX() <= Gdx.graphics.getWidth() &&
-				a.getY() + a.getHeight() * a.getScaleY() >= 0 &&
-				a.getY() <= Gdx.graphics.getHeight();
+		float width = Gdx.graphics.getWidth(), height = Gdx.graphics.getHeight();
+
+		float x = a.getX();
+		float xm = x + a.getWidth() * a.getScaleX();
+
+		float y = a.getY();
+		float ym = y + a.getHeight() * a.getScaleY();
+
+		return ((x >= 0 && x <= width) && (xm >= 0 && xm <= width))
+				&& ((y >= 0 && y <= height) && (ym >= 0 && ym <= height));
 	}
 
 	public static void setAlignmentAll(SelectBox selectBox, int align) {
