@@ -22,10 +22,7 @@ public class RectangleActor extends Actor implements Disposable {
 	}
 
 	public RectangleActor(Color c0, Color c1, Color c2, Color c3) {
-		setC0(c0);
-		setC1(c1);
-		setC2(c2);
-		setC3(c3);
+		setColors(c0, c1, c2, c3);
 	}
 
 	public RectangleActor() {
@@ -61,6 +58,13 @@ public class RectangleActor extends Actor implements Disposable {
 
 	public void setC3(Color c3) {
 		this.c3.set(c3);
+	}
+
+	public void setColors(Color c0, Color c1, Color c2, Color c3) {
+		setC0(c0);
+		setC1(c1);
+		setC2(c2);
+		setC3(c3);
 	}
 
 	@Override
@@ -100,10 +104,7 @@ public class RectangleActor extends Actor implements Disposable {
 
 	@Override
 	public void setColor(Color color) {
-		setC0(color);
-		setC1(color);
-		setC2(color);
-		setC3(color);
+		setColors(color, color, color, color);
 	}
 
 	@Override
