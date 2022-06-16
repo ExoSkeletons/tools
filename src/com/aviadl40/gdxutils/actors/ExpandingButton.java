@@ -2,6 +2,7 @@ package com.aviadl40.gdxutils.actors;
 
 import android.support.annotation.NonNull;
 
+import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.math.Interpolation;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.scenes.scene2d.Actor;
@@ -69,7 +70,6 @@ public class ExpandingButton extends WidgetGroup {
 				addAction(sequence);
 			}
 		});
-		addActor(root);
 	}
 
 	private TemporalAction restartProgressAction(boolean expand) {
@@ -199,28 +199,19 @@ public class ExpandingButton extends WidgetGroup {
 
 	@Override
 	public void act(float delta) {
-		// Adjust root alpha
-		root.getColor().a = interpolation.apply(1 - (progress * (hideRootOnExpand ? 1 : .5f)));
-
-		// Adjust children
 		Array<Actor> children = getChildren();
 		Actor c, prev = children.first();
+
 		prev.setPosition(0, 0);
+
 		float childX, childY, alignedX, alignedY;
-		boolean isFirstChild;
-		for (int i = 1; i < children.size; i++) {
+		for (int i = 0; i < children.size; i++) {
 			c = children.get(i);
 
 			alignedX = root.getX() + (root.getWidth() * root.getScaleX() - c.getWidth() * c.getScaleX()) / 2;
 			alignedY = root.getY() + (root.getHeight() * root.getScaleY() - c.getHeight() * c.getScaleY()) / 2;
 
-			isFirstChild = i == 1;
-
-			// Adjust child alpha
-			c.getColor().a = interpolation.apply(progress);
-
-			// Adjust child position
-			if (hideRootOnExpand && isFirstChild) {
+			if (hideRootOnExpand && i == 0) {
 				childX = alignedX;
 				childY = alignedY;
 			} else {
@@ -232,7 +223,7 @@ public class ExpandingButton extends WidgetGroup {
 											? prev.getWidth() * prev.getScaleX()
 											: -c.getWidth() * c.getScaleX()
 							) + (
-									!isFirstChild ? calcSpacing : 0
+									i > 0 ? calcSpacing : 0
 							),
 							progress
 					);
@@ -246,12 +237,13 @@ public class ExpandingButton extends WidgetGroup {
 											? prev.getHeight() * prev.getScaleY()
 											: -c.getHeight() * c.getScaleY()
 							) + (
-									!isFirstChild ? calcSpacing : 0
+									i > 0 ? calcSpacing : 0
 							),
 							progress
 					);
 				}
 			}
+
 			c.setPosition(childX, childY);
 
 			/*/
@@ -281,9 +273,22 @@ public class ExpandingButton extends WidgetGroup {
 	}
 
 	@Override
-	public void clearChildren() {
-		super.clearChildren();
-		addActor(root);
+	public void draw(Batch batch, float parentAlpha) {
+		validate();
+		if (isTransform()) applyTransform(batch, computeTransform());
+		parentAlpha *= getColor().a;
+		root.draw(
+				batch,
+				parentAlpha *
+						interpolation.apply(1 - (progress * (hideRootOnExpand ? 1 : .5f)))
+		);
+		drawChildren(batch, parentAlpha);
+		if (isTransform()) resetTransform(batch);
+	}
+
+	@Override
+	protected void drawChildren(Batch batch, float parentAlpha) {
+		super.drawChildren(batch, parentAlpha * interpolation.apply(progress));
 	}
 
 	@Override
