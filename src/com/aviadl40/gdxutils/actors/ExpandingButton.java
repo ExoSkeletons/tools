@@ -191,7 +191,7 @@ public class ExpandingButton extends WidgetGroup {
 			return root.hit(x, y, touchable);
 		if (progress == 1) {
 			Actor hit = super.hit(x, y, touchable);
-			if (hit != null) return hit;
+			if (hit != null && hit != this) return hit;
 			if (!hideRootOnExpand) return root.hit(x, y, touchable);
 		}
 		return null;
