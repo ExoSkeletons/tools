@@ -15,12 +15,14 @@ import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.EventListener;
+import com.badlogic.gdx.scenes.scene2d.ui.CheckBox;
 import com.badlogic.gdx.scenes.scene2d.ui.SelectBox;
 import com.badlogic.gdx.scenes.scene2d.ui.TextField;
 import com.badlogic.gdx.scenes.scene2d.ui.Tree;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Array;
+import com.badlogic.gdx.utils.Scaling;
 import com.badlogic.gdx.utils.XmlReader;
 
 public final class GdxUtils {
@@ -250,6 +252,11 @@ public final class GdxUtils {
 		for (Object o : array)
 			res.add(o.getClass());
 		return res;
+	}
+
+	public static void setCheckboxImageSize(CheckBox checkBox, float size) {
+		checkBox.getImageCell().size(size).fill();
+		checkBox.getImage().setScaling(Scaling.fit);
 	}
 
 	private GdxUtils() {
