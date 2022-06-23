@@ -74,6 +74,14 @@ public final class Utils {
 		);
 	}
 
+	public static String splitCamelCase(String src, String split) {
+		String[] strings = src.split("(?<=[a-z])(?=[A-Z])");
+		StringBuilder sb = new StringBuilder();
+		for (String s : strings) sb.append(s).append(split);
+		sb.deleteCharAt(sb.length() - 1);
+		return sb.toString();
+	}
+
 	public static String amount(String name, int amount, boolean withAmount) {
 		return "" + (withAmount ? amount + " " : "") + (Math.abs(amount) == 1 ? name : plural(name));
 	}
