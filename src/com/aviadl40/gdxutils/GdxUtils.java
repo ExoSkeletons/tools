@@ -150,6 +150,17 @@ public final class GdxUtils {
 		centerXY(actor, 0, Gdx.graphics.getWidth(), 0, Gdx.graphics.getHeight());
 	}
 
+	public static void flip(Actor a, boolean horizontal) {
+		boolean flipped;
+		if (horizontal) {
+			a.setScaleY(-a.getScaleY()); // Flip
+			a.setOriginY(a.getScaleY() < 0 ? a.getHeight() : 0); // Flip origin
+		} else {
+			a.setScaleX(-a.getScaleX()); // Flip
+			a.setOriginX(a.getScaleX() < 0 ? a.getWidth() : 0); // Flip origin
+		}
+	}
+
 	public static boolean isOnScreen(Actor a) {
 
 			/*
